@@ -10,8 +10,10 @@ void inorder(BinaryTreeNode<int>* root , vector<int> &in){
 
 bool twoSumInBST(BinaryTreeNode<int>* root, int target) {
 	vector<int> inorderVal;
+    //store sorted inorder values
     inorder(root, inorderVal);
 
+    //use two pointer approch to check if pair exists
     int i =0 , j = inorderVal.size()-1;
 
     while(i<j){
