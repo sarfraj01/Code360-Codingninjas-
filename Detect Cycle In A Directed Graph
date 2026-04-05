@@ -1,0 +1,48 @@
+#include<unordered_map>
+#include<list>
+bool checCycleDFS(int node , unordered_map<int, bool> &visited , 
+                    unordered_map<int , bool> &dfsVisited , unordered_map<int , list<int> > &adj){
+
+      visited[node]  = true;
+      dfsVisited[node]  =true;
+
+      for(auto neighbours : adj[node]){
+          if(!visited[neighbours]){
+            bool cycleDetected = checCycleDFS(neighbours , visited , dfsVisited ,adj);
+            if(cycleDetected)
+              return true;
+          }
+          else if(dfsVisited[neighbours]){
+            return true;
+          }
+      }
+      dfsVisited[node] = false;
+      return false;
+}
+
+int detectCycleInDirectedGraph(int n, vector < pair < int, int >> & edges) {
+  //cerate Adj list
+  unordered_map<int , list<int> > adj;
+  for(int i = 0; i < edges.size(); i++){
+    int u = edges[i].first;
+    int v = edges[i].second;
+
+    adj[u].push_back(v);
+
+  }
+
+  //call  dfs for all component
+  unordered_map<int, bool> visited;
+  unordered_map<int , bool> dfsVisited;
+  for(int i = 0; i <= n; i++){
+    if(!visited[i]){
+      bool CycleFound = checCycleDFS(i , visited , dfsVisited , adj);
+      if(CycleFound)
+        return true;
+    }
+  }
+  return false;
+}
+
+//TC = O(N+E)
+//SC = O(1)
