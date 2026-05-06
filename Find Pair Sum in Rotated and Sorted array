@@ -1,0 +1,53 @@
+#include <bits/stdc++.h> 
+int findPairSum(vector<int> arr, int target)
+{
+    //base case
+    int n = arr.size();
+    if(n == 1)
+        return false;
+
+    vector<int> arr2;
+
+    int minIndex = 0;
+
+
+    for(int i  = 0; i < n-1; i++){
+        if(arr[i] > arr[i+1]){
+            minIndex = i+1;
+            break;
+        }
+    }
+    for(int i = minIndex; i < n; i++){
+        arr2.push_back(arr[i]);
+    }
+
+    for(int i = 0; i < minIndex; i++){
+        arr2.push_back(arr[i]);
+    }
+
+    int n2 = arr2.size();
+    //base case
+    if(n2 == 1)
+        return false;
+
+    int left = 0;
+    int right = n2-1;
+
+
+    int sum = 0;
+
+    while(left < right){
+        sum = arr2[left] + arr2[right];
+        if(sum == target)
+            return true;
+            
+    if(sum > target)
+        right--;
+
+    if(sum < target)
+        left++;
+    }
+
+    return false;
+    
+}
